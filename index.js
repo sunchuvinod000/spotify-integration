@@ -6,6 +6,7 @@ const path = require('path');
 const connectDB = require('./connection');
 const router = require('./Routes');
 const bodyParser = require('body-parser');
+const rateLimit = require('express-rate-limit');
 
 const allowedOrigins = ['http://localhost:5000', 'https://accounts.spotify.com']; // Add your allowed origins here
 
@@ -27,11 +28,18 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 
+// Rate limiter
+const limiter = rateLimit({
+    windowMs: 60 * 1000, // 15 minutes
+    max: 2, // limit each IP to 100 requests per windowMs
+    message: "Too many requests from this IP, please try again after a minute"
+});
 // Set hbs as the template engine
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 
+app.use(limiter);
 app.use(cors(corsOptions))
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }));
