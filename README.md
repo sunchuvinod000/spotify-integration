@@ -13,7 +13,12 @@ Get all the tracks when user requested.
 
 
 //Steps to run the application
---npm install 
---npm run start
+Clone the code from Git
+
+----Build container in docker----
+docker build -t chillout:v1 . 
+
+-------Run the Docker Image-------
 
 
+docker run -p 5000:5000 --env-file .env chillout
