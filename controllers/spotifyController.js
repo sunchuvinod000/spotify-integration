@@ -26,19 +26,23 @@ async function saveTrackAdvice(accessToken) {
         const userResponse = await axios.get('https://api.spotify.com/v1/me', {
             headers: {
               'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
             },
           })
-        const email = userResponse.data.email;
+        const email = userResponse.data.email 
 
         //Fetch the user's top tracks using their access token
         const topTracksResponse = await axios.get(`https://api.spotify.com/v1/me/top/tracks`, {
             headers: {
-                'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
-            },
+                'Authorization': `Bearer ${accessToken}`
+                },
         });
-        const trackName = topTracksResponse?.data?.items[0].name || "Dancing Star" 
-        const artistName = topTracksResponse?.data?.items[0].artists.map(artist => artist.name).join(', ') || "Unknown Artist"
+        let trackName='Dansing star'
+        let artistName='Unknown Artist'
+        if(topTracksResponse.data.items.length) {
+            trackName = topTracksResponse.data.items[0].name || "Dancing Star" 
+            artistName = topTracksResponse.data.items[0].artists.map(artist => artist.name).join(', ') || "Unknown Artist"
+        }
         const adviceName = await getAdviceByTrack(trackName)
         const record = new TrackAdvice({
             email,
@@ -52,6 +56,7 @@ async function saveTrackAdvice(accessToken) {
         record.save()
         return { email }
     } catch (err) {
+        console.log(err)
         throw err
     }
 }

@@ -14,6 +14,7 @@ const AUTH_URL =
   })}`
 
 const loginHandler = async (req,res, next) => {
+    console.log(AUTH_URL)
     res.redirect(AUTH_URL)
 }
 const getTokenHandler = async (req, res) => {
@@ -29,12 +30,9 @@ const getTokenHandler = async (req, res) => {
 const saveTrackAdviceHandler = async (req, res) => {
     try {
         let accessToken = req.query.token
-        console.log('accessToken', accessToken);
         const resp  = await spotifyController.saveTrackAdvice(accessToken)
         const email = resp.email
-        console.log('user email', resp.email);
         const authToken = jwt.sign({ accessToken , email }, process.env.JWT_SECRET_KEY, { expiresIn: '1d' })
-        console.log('authToken', authToken);
         res.cookie('token', authToken, {
             httpOnly: true,    // Prevents JavaScript access
             secure: process.env.NODE_ENV === 'production',  // Use secure flag in production (only for HTTPS)
