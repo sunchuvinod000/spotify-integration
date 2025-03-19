@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error - Spotify API</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.error-container {
+    background-color: #2a2a2a; /* Slightly lighter dark shade */
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #ff4d4d; /* Red for error emphasis */
+    margin-bottom: 1.5rem;
+}
+
+.error-details {
+    background-color: #333333;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.error-details p {
+    margin: 0.5rem 0;
+}
+
+.error-details strong {
+    color: #1db954; /* Spotify green for labels */
+}
+
+.back-link {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #1db954; /* Spotify green */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s;
+}
+
+.back-link:hover {
+    background-color: #17a346; /* Darker green on hover */
+}
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>Oops! Something Went Wrong</h1>
+        {{#if err}}
+            <p>{{err}}</p>
+        {{/if}}
+        {{#if error}}
+            <div class="error-details">
+                {{#if error.status}}
+                    <p><strong>Error Status:</strong> {{error.status}}</p>
+                {{/if}}
+                {{#if error.message}}
+                    <p><strong>Error Message:</strong> {{error.message}}</p>
+                {{/if}}
+                {{#if error.details}}
+                    <p><strong>Details:</strong> {{error.details}}</p>
+                {{/if}}
+                <p>{{error}}</p>
+            </div>
+        {{else}}
+            <p>An unknown error occurred. Please try again later.</p>
+        {{/if}}
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>

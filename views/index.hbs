@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Chillout</title>
+    <style>/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Styling for the input div (logged in state) */
+.input {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input a {
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.input a:hover {
+    text-decoration: underline;
+}
+
+.input form {
+    display: inline-block;
+}
+
+.input input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+}
+.input input[type="submit"] {
+    padding: 8px 15px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+.input input[type="submit"]:hover {
+    background-color: #0052a3;
+}
+
+.input input[type="submit"]:active {
+    background-color: #003d80;
+}
+
+/* Styling for login div (logged out state) */
+.login {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login a {
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.login a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for user welcome section */
+.user {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user p {
+    margin: 0 0 10px 0;
+    color: #444;
+}
+
+.user a {
+    text-decoration: none;
+    color: #0066cc;
+    font-weight: bold;
+}
+
+.user a:hover {
+    text-decoration: underline;
+}
+
+/* Styling for tracks container */
+#tracks-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#tracks-container div {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#tracks-container p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+#tracks-container strong {
+    color: #222;
+    margin-right: 5px;
+}</style>
+</head>
+<body>
+        {{#if loggedIn}}
+        <div class="input ">
+            <a href="/logout">Logout</a>
+            <form method="post" action="/getTrackAdvice">
+            <input placeholder="Enter your email" type="text" name="userId"/>
+            <input type="submit" value="Get Tracks with Advices"/>
+            </form>
+        </div>
+            
+        {{else}}
+        <div class="login">
+            <a href="/login">Login</a>
+        </div>
+        {{/if}}
+        {{#if email}}
+        <div class="user">
+            <p>Welcome Mr. {{email}}</p>
+        </div>
+
+        {{/if}}
+    <div id="tracks-container">
+        {{#if tracks}}
+            {{#each tracks}}
+                <div>
+                    <p><strong>Name:</strong>{{this.track.name}} &nbsp <strong>Artist:</strong> {{this.track.artist}} &nbsp <strong>Advice:</strong> {{this.advice}}</p>
+                </div>
+            {{/each}}
+        {{/if}}
+    </div>
+</body>
+</html>
